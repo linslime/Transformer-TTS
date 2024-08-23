@@ -16,7 +16,7 @@ def main():
     dataset = get_post_dataset()
     global_step = 0
     
-    m = nn.DataParallel(ModelPostNet().cuda())
+    m = nn.DataParallel(ModelPostNet())
 
     m.train()
     optimizer = t.optim.Adam(m.parameters(), lr=hp.lr)
@@ -34,9 +34,6 @@ def main():
                 adjust_learning_rate(optimizer, global_step)
                 
             mel, mag = data
-        
-            mel = mel.cuda()
-            mag = mag.cuda()
             
             mag_pred = m.forward(mel)
 
